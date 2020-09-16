@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         System.out.println("Calisti");
         if (requestCode==1){
-            System.out.println("Calisti");
+
             if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
                 System.out.println("Calisti");
                 if (grantResults.length>0){
@@ -86,13 +86,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==2){
+        if (requestCode==1){
             if (data!=null){
                 if (resultCode==RESULT_OK){
                     imagsUri=data.getData();
-//                    Picasso.with(MainActivity.this).load(imagsUri).into(imageView);
-                    imageView.setImageURI(imagsUri);
-
+                    Picasso.with(MainActivity.this).load(imagsUri).into(imageView);
                 }
             }
         }
