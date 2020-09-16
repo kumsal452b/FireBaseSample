@@ -53,8 +53,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        System.out.println("Calisti");
         if (requestCode==1){
-            if (permissions.equals(Manifest.permission.READ_EXTERNAL_STORAGE)){
+            if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
                 if (grantResults.length>0){
                     Intent intent=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.INTERNAL_CONTENT_URI);
                     startActivityForResult(intent,2);
