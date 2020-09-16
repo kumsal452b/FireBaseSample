@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,12 +16,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -36,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText filename;
     private TextView upload;
     private ProgressBar progressBar;
+    private StorageReference storageReference;
+    private DatabaseReference mDatabasereferance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         progressBar=findViewById(R.id.Progres_Bar);
         upload=findViewById(R.id.upload_textview);
         upload_Btn=findViewById(R.id.upload_button);
+        storageReference= FirebaseStorage.getInstance().getReference("Uploads");
+        mDatabasereferance= FirebaseDatabase.getInstance().getReference("uploads");
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,6 +105,18 @@ public class MainActivity extends AppCompatActivity {
                     Picasso.with(MainActivity.this).load(imagsUri).into(imageView);
                 }
             }
+        }
+    }
+    private String getFileextension(Uri uri){
+        ContentResolver cR=getContentResolver();
+        MimeTypeMap mime=MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+    private void UploadFile(){
+        if (imagsUri!=null){
+            StorageReference fileReferance=storageReference.child("Uploads/"+System.currentTimeMillis()+" "+getFileextension(imagsUri));
+        }else{
+            Toast.makeText(this, "No file selected", Toast.LENGTH_LONG).show();
         }
     }
 }
