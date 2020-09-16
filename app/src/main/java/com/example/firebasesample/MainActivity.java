@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.IOException;
@@ -27,12 +28,15 @@ public class MainActivity extends AppCompatActivity {
     private Uri imagsUri;
     private Bitmap Images;
     private ImageView imageView;
+    private EditText filename;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btn=findViewById(R.id.choice_image);
-        imageView=findViewById(R.id.choice_image);
+        imageView=findViewById(R.id.image_view);
+        filename=findViewById(R.id.edittext);
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,8 +67,10 @@ public class MainActivity extends AppCompatActivity {
             if (data!=null){
                 if (resultCode==RESULT_OK){
                     imagsUri=data.getData();
+                    filename.setText(imagsUri+"");
                     try {
                         Images=MediaStore.Images.Media.getBitmap(this.getContentResolver(),imagsUri);
+                        imageView.setImageBitmap(Images);
 
                     } catch (IOException e) {
                         e.printStackTrace();
