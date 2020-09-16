@@ -18,6 +18,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,10 +29,14 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
 
     private Button btn;
+    private Button upload_Btn;
     private Uri imagsUri;
     private Bitmap Images;
     private ImageView imageView;
     private EditText filename;
+    private TextView upload;
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,18 +44,27 @@ public class MainActivity extends AppCompatActivity {
         btn=findViewById(R.id.choice_image);
         imageView=findViewById(R.id.image_view);
         filename=findViewById(R.id.edittext);
-
+        progressBar=findViewById(R.id.Progres_Bar);
+        upload=findViewById(R.id.upload_textview);
+        upload_Btn=findViewById(R.id.upload_button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
-                    ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
-                }else{
-                    Intent intent=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                    startActivityForResult(intent,2);
-                }
+//                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+//                    ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
+//                }else{
+//                    Intent intent=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+//                    startActivityForResult(intent,2);
+//                }
+                fileChooser();
             }
         });
+    }
+    public void fileChooser(){
+        Intent intent=new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,1);
     }
 
     @Override
@@ -55,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         System.out.println("Calisti");
         if (requestCode==1){
+            System.out.println("Calisti");
             if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                System.out.println("Calisti");
                 if (grantResults.length>0){
                     Intent intent=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.INTERNAL_CONTENT_URI);
                     startActivityForResult(intent,2);
@@ -71,14 +90,8 @@ public class MainActivity extends AppCompatActivity {
             if (data!=null){
                 if (resultCode==RESULT_OK){
                     imagsUri=data.getData();
-                    filename.setText(imagsUri+"");
-                    try {
-                        Images=MediaStore.Images.Media.getBitmap(this.getContentResolver(),imagsUri);
-                        imageView.setImageBitmap(Images);
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+//                    Picasso.with(MainActivity.this).load(imagsUri).into(imageView);
+                    imageView.setImageURI(imagsUri);
 
                 }
             }
