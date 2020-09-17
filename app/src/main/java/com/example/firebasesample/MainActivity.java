@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -24,10 +25,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -115,6 +120,36 @@ public class MainActivity extends AppCompatActivity {
     private void UploadFile(){
         if (imagsUri!=null){
             StorageReference fileReferance=storageReference.child("Uploads/"+System.currentTimeMillis()+" "+getFileextension(imagsUri));
+            fileReferance.putFile(imagsUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Handler handler=new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBar.setProgress(0);
+                                }
+                            }, 5000);
+                            Toast.makeText(MainActivity.this, "Succes", Toast.LENGTH_SHORT).show();
+                            Uploads uploads=new Uploads(filename.getText().toString().trim(),taskSnapshot.getUploadSessionUri().toString());
+                            String uploadID=mDatabasereferance.getKey();
+                            mDatabasereferance.child(uploadID).setValue(upload);
+                        }
+
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(MainActivity.this,e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    double progress=(100*snapshot.getBytesTransferred()/snapshot.getTotalByteCount());
+                    progressBar.setProgress((int)progress);
+                }
+            });
+
         }else{
             Toast.makeText(this, "No file selected", Toast.LENGTH_LONG).show();
         }
