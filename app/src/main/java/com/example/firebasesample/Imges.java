@@ -17,9 +17,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Imges extends AppCompatActivity {
-    private ArrayList<ImagesItems> imagesItems;
+    private List<Uploads> uploads;
     private ItemAdapter adapter;
     private RecyclerView recyclerView;
     private DatabaseReference databaseReference;
@@ -29,7 +30,7 @@ public class Imges extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imges);
-        imagesItems=new ArrayList<>();
+        uploads=new ArrayList<>();
         recyclerView=findViewById(R.id.recyler_virw);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -39,10 +40,10 @@ public class Imges extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
                 for (DataSnapshot data: snapshot.getChildren()) {
-                    ImagesItems imagesItems2=data.getValue(ImagesItems.class);
-                    imagesItems.add(imagesItems2);
+                   Uploads uploads1=data.getValue(Uploads.class);
+                   uploads.add(uploads1);
                 }
-                adapter=new ItemAdapter(Imges.this,imagesItems);
+                adapter=new ItemAdapter(Imges.this,uploads);
                 recyclerView.setAdapter(adapter);
             }
 

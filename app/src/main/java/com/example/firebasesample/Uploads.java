@@ -1,7 +1,7 @@
 package com.example.firebasesample;
 
 public class Uploads {
-    String name,imaUrl;
+    private String name,imaUrl;
 
     public String getName() {
         return name;

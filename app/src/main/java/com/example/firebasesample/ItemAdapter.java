@@ -13,12 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
     Context context;
-    ArrayList<ImagesItems> arrayList;
+    List<Uploads> arrayList;
 
-    public ItemAdapter(Context context, ArrayList<ImagesItems> arrayList) {
+    public ItemAdapter(Context context,  List<Uploads> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
     }
@@ -32,9 +33,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
-        ImagesItems currentItem=arrayList.get(position);
-        String imageUrl=currentItem.ImagesURLgetter();
-        String imageName=currentItem.ImageNameGetter();
+        Uploads currentItem=arrayList.get(position);
+        String imageUrl=currentItem.getImaUrl();
+        String imageName=currentItem.getName();
         holder.textView.setText(imageName);
         Picasso.with(context).load(imageUrl).centerCrop().into(holder.imageView);
     }
