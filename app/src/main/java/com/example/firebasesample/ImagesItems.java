@@ -10,13 +10,13 @@ public class ImagesItems {
         ImageName = imageName;
         ImageURL = imageURL;
     }
-    public String ImageNameGetter(String ImageName){
+    public String ImageNameGetter(){
         return ImageName;
     }
     public void ImageNameSetter(String ImageName){
         this.ImageName=ImageName;
     }
-    public String ImagesURLgetter(String ImageURL){
+    public String ImagesURLgetter(){
         return ImageURL;
     }
     public void ImageURLsetter(String ImagesURL){
