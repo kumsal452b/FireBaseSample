@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        System.out.println("Calisti");
         if (requestCode==1){
 
             if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
@@ -140,9 +139,9 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }, 5000);
                             Toast.makeText(MainActivity.this, "Succes", Toast.LENGTH_SHORT).show();
-//                            Uploads uploads=new Uploads(filename.getText().toString().trim(),"");
-//                            String uploadID=mDatabasereferance.getKey();
-//                            mDatabasereferance.child(uploadID).setValue(upload);
+                            Uploads uploads=new Uploads(filename.getText().toString().trim(),"");
+                            String uploadID=mDatabasereferance.getKey();
+                            mDatabasereferance.child(uploadID).setValue(upload);
                         }
 
                     }).addOnFailureListener(new OnFailureListener() {
