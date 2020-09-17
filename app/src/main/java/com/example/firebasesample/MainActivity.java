@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private StorageReference storageReference;
     private DatabaseReference mDatabasereferance;
-
+    private StorageTask uploadTask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +83,11 @@ public class MainActivity extends AppCompatActivity {
         upload_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UploadFile();
+                if (uploadTask!=null && uploadTask.isInProgress()){
+                    Toast.makeText(MainActivity.this, "Uploded progres Please wait", Toast.LENGTH_LONG).show();
+                }else{
+                    UploadFile();
+                }
             }
         });
     }
@@ -127,8 +132,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void UploadFile(){
         if (imagsUri!=null){
-            StorageReference fileReferance=storageReference.child(System.currentTimeMillis()+"."+getFileextension(imagsUri));
-            fileReferance.putFile(imagsUri)
+            final StorageReference fileReferance=storageReference.child(System.currentTimeMillis()+"."+getFileextension(imagsUri));
+            uploadTask=fileReferance.putFile(imagsUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -143,8 +148,8 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Succes", Toast.LENGTH_SHORT).show();
                             Uploads uploads=new Uploads(filename.getText().toString().trim(),"nesne");
                             String uploadID=mDatabasereferance.push().getKey();
-                            Map<String,Object> map = new HashMap<>();
-                            map.put("img","url");
+                            Map<String,String> map = new HashMap<>();
+                            map.put(filename.getText().toString().trim(),fileReferance.getDownloadUrl().toString());
 //                            mDatabasereferance.push().setValue(map);
                             mDatabasereferance.child(uploadID).setValue(map);
 
