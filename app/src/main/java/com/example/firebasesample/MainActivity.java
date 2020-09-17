@@ -76,6 +76,12 @@ public class MainActivity extends AppCompatActivity {
                 fileChooser();
             }
         });
+        upload_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UploadFile();
+            }
+        });
     }
     public void fileChooser(){
         Intent intent=new Intent();
@@ -119,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void UploadFile(){
         if (imagsUri!=null){
-            StorageReference fileReferance=storageReference.child("Uploads/"+System.currentTimeMillis()+" "+getFileextension(imagsUri));
+            StorageReference fileReferance=storageReference.child(System.currentTimeMillis()+"."+getFileextension(imagsUri));
             fileReferance.putFile(imagsUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
