@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            System.out.println("Buraya kadar");
                             Handler handler=new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override
@@ -138,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }, 5000);
                             Toast.makeText(MainActivity.this, "Succes", Toast.LENGTH_SHORT).show();
-                            Uploads uploads=new Uploads(filename.getText().toString().trim(),taskSnapshot.getUploadSessionUri().toString());
+                            Uploads uploads=new Uploads(filename.getText().toString().trim(),"");
                             String uploadID=mDatabasereferance.getKey();
                             mDatabasereferance.child(uploadID).setValue(upload);
                         }
