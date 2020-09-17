@@ -139,9 +139,9 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }, 5000);
                             Toast.makeText(MainActivity.this, "Succes", Toast.LENGTH_SHORT).show();
-                            Uploads uploads=new Uploads(filename.getText().toString().trim(),"");
+                            Uploads uploads=new Uploads(filename.getText().toString().trim(),"nesne");
                             String uploadID=mDatabasereferance.getKey();
-                            mDatabasereferance.child(uploadID).setValue(upload);
+//                            mDatabasereferance.child(uploadID).setValue(upload);
                         }
 
                     }).addOnFailureListener(new OnFailureListener() {
