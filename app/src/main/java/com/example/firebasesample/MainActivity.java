@@ -38,6 +38,8 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -141,7 +143,11 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Succes", Toast.LENGTH_SHORT).show();
                             Uploads uploads=new Uploads(filename.getText().toString().trim(),"nesne");
                             String uploadID=mDatabasereferance.push().getKey();
-                            mDatabasereferance.child(uploadID).setValue(upload);
+                            Map<String,Object> map = new HashMap<>();
+                            map.put("img","url");
+//                            mDatabasereferance.push().setValue(map);
+                            mDatabasereferance.child(uploadID).setValue(map);
+
                         }
 
                     }).addOnFailureListener(new OnFailureListener() {
