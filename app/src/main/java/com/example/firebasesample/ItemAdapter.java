@@ -10,9 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
-public class ItemAdapter extends RecyclerView.Adapter {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
     Context context;
     ArrayList<ImagesItems> arrayList;
 
@@ -23,17 +25,18 @@ public class ItemAdapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.images_items,parent,false);
         return new ItemHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
         ImagesItems currentItem=arrayList.get(position);
         String imageUrl=currentItem.ImagesURLgetter();
         String imageName=currentItem.ImageNameGetter();
-        holder.i
+        holder.textView.setText(imageName);
+        Picasso.with(context).load(imageUrl).centerCrop().into(holder.imageView);
     }
 
     @Override
@@ -45,11 +48,11 @@ public class ItemAdapter extends RecyclerView.Adapter {
 
         public ImageView imageView;
         public TextView textView;
+        public TextView textView2;
         public ItemHolder(@NonNull View itemView) {
             super(itemView);
             imageView=itemView.findViewById(R.id.image_view);
             textView=itemView.findViewById(R.id.text_view_name);
-
         }
     }
 }

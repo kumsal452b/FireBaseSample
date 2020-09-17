@@ -16,8 +16,7 @@ public class Uploads {
     }
 
     public void setImaUrl(String imaUrl) {
-        this.imaUrl = imaUrl;
-    }
+        this.imaUrl = imaUrl;    }
 
     public Uploads(){
 

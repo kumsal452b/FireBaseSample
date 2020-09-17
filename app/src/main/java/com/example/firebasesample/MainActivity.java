@@ -39,6 +39,7 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,9 +56,11 @@ public class MainActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private DatabaseReference mDatabasereferance;
     private StorageTask uploadTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         btn=findViewById(R.id.choice_image);
         imageView=findViewById(R.id.image_view);
@@ -88,6 +91,13 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     UploadFile();
                 }
+            }
+        });
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(),Imges.class);
+                startActivity(intent);
             }
         });
     }
@@ -146,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }, 5000);
                             Toast.makeText(MainActivity.this, "Succes", Toast.LENGTH_SHORT).show();
-                            Uploads uploads=new Uploads(filename.getText().toString().trim(),"nesne");
+
                             String uploadID=mDatabasereferance.push().getKey();
                             Map<String,String> map = new HashMap<>();
                             map.put(filename.getText().toString().trim(),fileReferance.getDownloadUrl().toString());
