@@ -35,6 +35,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -139,9 +140,9 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }, 5000);
                             Toast.makeText(MainActivity.this, "Succes", Toast.LENGTH_SHORT).show();
-                            Uploads uploads=new Uploads(filename.getText().toString().trim(),"");
-                            String uploadID=mDatabasereferance.getKey();
-                            mDatabasereferance.child(uploadID).setValue(upload);
+//                            Uploads uploads=new Uploads(filename.getText().toString().trim(),"");
+//                            String uploadID=mDatabasereferance.getKey();
+//                            mDatabasereferance.child(uploadID).setValue(upload);
                         }
 
                     }).addOnFailureListener(new OnFailureListener() {
