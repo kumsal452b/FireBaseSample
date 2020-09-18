@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.encoders.ObjectEncoder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,14 +40,21 @@ public class Imges extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
-                for (DataSnapshot data: snapshot.getChildren()) {
-                   Uploads uploads1=data.getValue(Uploads.class);
-                   uploads.add(uploads1);
+               HashMap<String, Object> dataap=(HashMap<String, Object>) snapshot.getValue();
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+
+                    HashMap<String,String> userData=(HashMap<String,String>)dataSnapshot.getValue();
+                    String key=userData.keySet().toString();
+                    String key2=key.substring(1,key.length()-1);
+                    String url=userData.get(key2);
+                    String url2=url.substring(1,url.length()-1);
+                    System.out.println(url);
+                    Uploads uploads1=new Uploads(key2,url2);
+                    uploads.add(uploads1);
                 }
                 adapter=new ItemAdapter(Imges.this,uploads);
                 recyclerView.setAdapter(adapter);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(Imges.this, error.getMessage(), Toast.LENGTH_SHORT).show();

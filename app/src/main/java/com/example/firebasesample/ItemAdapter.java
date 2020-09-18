@@ -36,8 +36,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
         Uploads currentItem=arrayList.get(position);
         String imageUrl=currentItem.getImaUrl();
         String imageName=currentItem.getName();
+        System.out.println(position+" "+imageUrl);
         holder.textView.setText(imageName);
-        Picasso.with(context).load(imageUrl).centerCrop().into(holder.imageView);
+        Picasso.with(context).load(imageUrl).into(holder.imageView);
     }
 
     @Override
