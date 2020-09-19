@@ -1,7 +1,21 @@
 package com.example.firebasesample;
 
+import com.google.firebase.database.Exclude;
+
 public class Uploads {
-    private String name,imaUrl;
+    private String name;
+    private String imaUrl;
+    @Exclude
+    public String getKey() {
+        return key;
+    }
+
+    @Exclude
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    private String key;
 
     public String getName() {
         return name;
