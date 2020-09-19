@@ -65,6 +65,7 @@ public class Imges extends AppCompatActivity implements ItemAdapter.OnItemClickL
 
     @Override
     public void onItemClick(int position) {
+        Toast.makeText(this, "Item clıck "+ position, Toast.LENGTH_SHORT).show();
 
     }
 
