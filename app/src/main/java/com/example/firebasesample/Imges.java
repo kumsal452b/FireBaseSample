@@ -44,7 +44,6 @@ public class Imges extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
-               HashMap<String, Object> dataap=(HashMap<String, Object>) snapshot.getValue();
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
                     JSONObject array=(JSONObject) dataSnapshot.getValue();
 //                    System.out.println();

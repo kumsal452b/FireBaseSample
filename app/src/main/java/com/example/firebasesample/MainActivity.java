@@ -39,6 +39,9 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -160,10 +163,15 @@ public class MainActivity extends AppCompatActivity {
                                 String uploadID=mDatabasereferance.push().getKey();
                                 Map<String,String> map = new HashMap<>();
 
-                                map.put("Dowload_URL",url);
-                                map.put("Name ",filename.getText().toString());
-                               mDatabasereferance.push().setValue(map);
-                                mDatabasereferance.child(uploadID).setValue(map);
+                                JSONObject object=new JSONObject();
+
+                                try {
+                                    object.put("name",filename.getText().toString());
+                                    object.put("dowload_URL",url);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                mDatabasereferance.child(uploadID).setValue(object);
                             }
                         });
                     }
