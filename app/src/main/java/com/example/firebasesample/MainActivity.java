@@ -163,8 +163,9 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "Succes", Toast.LENGTH_SHORT).show();
                                 String uploadID=mDatabasereferance.push().getKey();
                                 Map<String,String> map = new HashMap<>();
-            
-                                mDatabasereferance.child(uploadID).setValue(object);
+                                map.put("name",filename.getText().toString());
+                                map.put("url",url);
+                                mDatabasereferance.child(uploadID).setValue(map);
                             }
                         });
                     }

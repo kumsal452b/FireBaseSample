@@ -45,21 +45,10 @@ public class Imges extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    JSONObject array=(JSONObject) dataSnapshot.getValue();
 //                    System.out.println();
-//                    HashMap<String,String> userData=(HashMap<String,String>)dataSnapshot.getValue();
-//                    String key=userData.keySet().toString();
-//                    String key2=key.substring(1,key.length()-1);
-//                    String url=userData.get(key2);
-//                    String url2=url.substring(1,url.length()-1);
-//                    System.out.println(url);
-                    Uploads uploads1= null;
-                    try {
-                        uploads1 = new Uploads(array.getString("name").toString(),array.getString("Dowload_URL"));
-                        uploads.add(uploads1);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    HashMap<String,String> userData=(HashMap<String,String>)dataSnapshot.getValue();
+                    Uploads uploads1= new Uploads(userData.get("name"),userData.get("url"));
+                    uploads.add(uploads1);
                 }
                 adapter=new ItemAdapter(Imges.this,uploads);
                 recyclerView.setAdapter(adapter);
