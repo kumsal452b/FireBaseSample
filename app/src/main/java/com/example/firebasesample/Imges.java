@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.encoders.ObjectEncoder;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -46,15 +47,20 @@ public class Imges extends AppCompatActivity {
                HashMap<String, Object> dataap=(HashMap<String, Object>) snapshot.getValue();
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
                     JSONObject array=(JSONObject) dataSnapshot.getValue();
-                    System.out.println();
-                    HashMap<String,String> userData=(HashMap<String,String>)dataSnapshot.getValue();
-                    String key=userData.keySet().toString();
-                    String key2=key.substring(1,key.length()-1);
-                    String url=userData.get(key2);
-                    String url2=url.substring(1,url.length()-1);
-                    System.out.println(url);
-                    Uploads uploads1=new Uploads(key2,url2);
-                    uploads.add(uploads1);
+//                    System.out.println();
+//                    HashMap<String,String> userData=(HashMap<String,String>)dataSnapshot.getValue();
+//                    String key=userData.keySet().toString();
+//                    String key2=key.substring(1,key.length()-1);
+//                    String url=userData.get(key2);
+//                    String url2=url.substring(1,url.length()-1);
+//                    System.out.println(url);
+                    Uploads uploads1= null;
+                    try {
+                        uploads1 = new Uploads(array.getString("name").toString(),array.getString("Dowload_URL"));
+                        uploads.add(uploads1);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
                 adapter=new ItemAdapter(Imges.this,uploads);
                 recyclerView.setAdapter(adapter);
