@@ -16,6 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.encoders.ObjectEncoder;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +45,8 @@ public class Imges extends AppCompatActivity {
             {
                HashMap<String, Object> dataap=(HashMap<String, Object>) snapshot.getValue();
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-
+                    JSONObject array=(JSONObject) dataSnapshot.getValue();
+                    System.out.println();
                     HashMap<String,String> userData=(HashMap<String,String>)dataSnapshot.getValue();
                     String key=userData.keySet().toString();
                     String key2=key.substring(1,key.length()-1);
