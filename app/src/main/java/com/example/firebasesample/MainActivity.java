@@ -39,6 +39,7 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -162,15 +163,7 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "Succes", Toast.LENGTH_SHORT).show();
                                 String uploadID=mDatabasereferance.push().getKey();
                                 Map<String,String> map = new HashMap<>();
-
-                                JSONObject object=new JSONObject();
-
-                                try {
-                                    object.put("name",filename.getText().toString());
-                                    object.put("dowload_URL",url);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+            
                                 mDatabasereferance.child(uploadID).setValue(object);
                             }
                         });
