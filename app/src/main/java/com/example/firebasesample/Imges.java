@@ -60,6 +60,7 @@ public class Imges extends AppCompatActivity implements ItemAdapter.OnItemClickL
                     HashMap<String,String> userData=(HashMap<String,String>)dataSnapshot.getValue();
                     Uploads uploads1= new Uploads(userData.get("name"),userData.get("url"));
                     uploads1.setKey(dataSnapshot.getKey());
+
                     uploads.add(uploads1);
                 }
                 adapter.notifyDataSetChanged();
