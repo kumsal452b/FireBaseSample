@@ -24,11 +24,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Imges extends AppCompatActivity {
+public class Imges extends AppCompatActivity implements ItemAdapter.OnItemClickListener {
     private List<Uploads> uploads;
     private ItemAdapter adapter;
     private RecyclerView recyclerView;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference ;
 
 
     @Override
@@ -52,12 +52,29 @@ public class Imges extends AppCompatActivity {
                 }
                 adapter=new ItemAdapter(Imges.this,uploads);
                 recyclerView.setAdapter(adapter);
+                adapter.setOnItemClickListener(Imges.this);
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(Imges.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
+    }
+
+    @Override
+    public void onWhatEverClick(int position) {
+
+    }
+
+    @Override
+    public void onDelereClick(int position) {
 
     }
 }
