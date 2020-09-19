@@ -49,7 +49,7 @@ public class Imges extends AppCompatActivity implements ItemAdapter.OnItemClickL
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         databaseReference= FirebaseDatabase.getInstance().getReference("uploads");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        mDBlistener=databaseReference.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
