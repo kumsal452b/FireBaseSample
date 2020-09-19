@@ -42,7 +42,7 @@ public class Imges extends AppCompatActivity implements ItemAdapter.OnItemClickL
         uploads=new ArrayList<>();
 
         adapter=new ItemAdapter(Imges.this,uploads);
-        recyclerView.setAdapter(adapter);
+
         adapter.setOnItemClickListener(Imges.this);
         storage=FirebaseStorage.getInstance();
         recyclerView=findViewById(R.id.recyler_virw);
@@ -70,6 +70,7 @@ public class Imges extends AppCompatActivity implements ItemAdapter.OnItemClickL
                 Toast.makeText(Imges.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+        recyclerView.setAdapter(adapter);
 
     }
 
@@ -101,5 +102,12 @@ public class Imges extends AppCompatActivity implements ItemAdapter.OnItemClickL
                 Toast.makeText(Imges.this, "error happened during deleted object", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+        databaseReference.removeEventListener(mDBlistener);
     }
 }
